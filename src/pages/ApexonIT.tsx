@@ -340,11 +340,6 @@ const softwareProducts = [
   },
 ];
 
-const DEMO_INBOX = import.meta.env.VITE_DEMO_FORM_EMAIL?.trim() || 'info@apexongroup.net';
-
-const getDemoFormSubmitUrl = () =>
-  `https://formsubmit.co/ajax/${encodeURIComponent(DEMO_INBOX)}`;
-
 /** `true` = white hero (matches body #f8f9fc), preview only. `false` = original dark hero. Say “make permanent” → set `false` + move light styles into CSS as default (or keep `true`). */
 const IT_HERO_LIGHT_PREVIEW = true;
 
@@ -356,6 +351,7 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
   const [demoForm, setDemoForm] = useState({ name: '', designation: '', email: '', mobile: '', remarks: '' });
   const [demoFormError, setDemoFormError] = useState<string | null>(null);
   const [isDemoSending, setIsDemoSending] = useState(false);
+  const [demoSuccess, setDemoSuccess] = useState(false);
 
   const nav = (page: string) => {
     onNavigate(page);
@@ -395,8 +391,7 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setDemoModal({ open: false, productName: '' });
-        setDemoFormError(null);
+        closeDemoModal();
       }
     };
     window.addEventListener('keydown', onKey);
@@ -427,6 +422,7 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
   const openDemoModal = (productName: string) => {
     setDemoForm({ name: '', designation: '', email: '', mobile: '', remarks: '' });
     setDemoFormError(null);
+    setDemoSuccess(false);
     setIsDemoSending(false);
     setDemoModal({ open: true, productName });
   };
@@ -435,6 +431,7 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
     (document.activeElement as HTMLElement | null)?.blur();
     setDemoModal({ open: false, productName: '' });
     setDemoFormError(null);
+    setDemoSuccess(false);
     setIsDemoSending(false);
   };
 
@@ -445,15 +442,12 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
     const email = demoForm.email.trim();
     const mobile = demoForm.mobile.trim();
     const remarks = demoForm.remarks.trim();
+    
     if (!name || !designation || !email || !mobile) {
       setDemoFormError('Please enter your name, designation, email, and mobile number.');
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setDemoFormError('Please enter a valid email address.');
-      return;
-    }
-
+    
     const message = [
       `Product: ${demoModal.productName}`,
       `Designation: ${designation}`,
@@ -465,36 +459,42 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
 
     setIsDemoSending(true);
     setDemoFormError(null);
+    const mailApi = import.meta.env.VITE_MAIL_API?.trim() || '/api/send-mail';
     try {
-      const res = await fetch(getDemoFormSubmitUrl(), {
+      const res = await fetch(mailApi, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           _subject: `Demo request: ${demoModal.productName} (ApexonIT)`,
-          _replyto: email,
-          _captcha: false,
           name,
           email,
           message,
         }),
       });
-      const data: { success?: boolean | string; message?: string; error?: string } = await res.json().catch(() => ({}));
+      
+      let data: any = {};
+      try {
+        data = await res.json();
+      } catch (e) {
+        throw new Error(`Server error (${res.status}). Start mail API: npm run server`);
+      }
+
       if (!res.ok) {
-        throw new Error(data.error || data.message || `Request failed (${res.status}).`);
+        throw new Error(data.message || data.error || `Request failed (${res.status}).`);
       }
-      if (data.error) {
-        throw new Error(String(data.error));
-      }
-      if (data.success === false || data.success === 'false') {
+      
+      if (data.success === false) {
         throw new Error(data.message || 'Could not send this request.');
       }
-      closeDemoModal();
+      
+      setDemoSuccess(true);
+      setTimeout(() => closeDemoModal(), 3500);
+
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Network error. Try again.';
-      setDemoFormError(msg);
+      setDemoFormError(err instanceof Error ? err.message : 'Network error. Try again.');
     } finally {
       setIsDemoSending(false);
     }
@@ -1094,84 +1094,100 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
                   </svg>
                 </button>
               </div>
-              <form className="it-demo-modal-form" onSubmit={submitDemoRequest}>
-                <div className="it-demo-modal-row">
-                  <label className="it-demo-modal-field">
-                    <span>Name <abbr title="required">*</abbr></span>
-                    <input
-                      type="text"
-                      name="name"
-                      autoComplete="name"
-                      autoFocus
-                      value={demoForm.name}
-                      onChange={ev => setDemoForm(f => ({ ...f, name: ev.target.value }))}
-                      required
-                      placeholder="Full name"
-                    />
-                  </label>
-                  <label className="it-demo-modal-field">
-                    <span>Designation <abbr title="required">*</abbr></span>
-                    <input
-                      type="text"
-                      name="designation"
-                      autoComplete="organization-title"
-                      value={demoForm.designation}
-                      onChange={ev => setDemoForm(f => ({ ...f, designation: ev.target.value }))}
-                      required
-                      placeholder="Job title"
-                    />
-                  </label>
+              {demoSuccess ? (
+                <div style={{ textAlign: 'center', padding: '48px 20px' }}>
+                  <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f0fdf4', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', animation: 'fadeInDown 0.5s ease' }}>
+                    <svg width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                  </div>
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f1f4b', marginBottom: 12 }}>Request Received!</h3>
+                  <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: 1.6 }}>Thank you for your interest. Our engineering team will reach out to you within 24 hours.</p>
                 </div>
-                <div className="it-demo-modal-row">
+              ) : (
+                <form className="it-demo-modal-form" onSubmit={submitDemoRequest}>
+                  <div className="it-demo-modal-row">
+                    <label className="it-demo-modal-field">
+                      <span>Name <abbr title="required">*</abbr></span>
+                      <input
+                        type="text"
+                        name="name"
+                        autoComplete="name"
+                        autoFocus
+                        value={demoForm.name}
+                        onChange={ev => setDemoForm(f => ({ ...f, name: ev.target.value }))}
+                        required
+                        placeholder="Full name"
+                      />
+                    </label>
+                    <label className="it-demo-modal-field">
+                      <span>Designation <abbr title="required">*</abbr></span>
+                      <input
+                        type="text"
+                        name="designation"
+                        autoComplete="organization-title"
+                        value={demoForm.designation}
+                        onChange={ev => setDemoForm(f => ({ ...f, designation: ev.target.value }))}
+                        required
+                        placeholder="Job title"
+                      />
+                    </label>
+                  </div>
+                  <div className="it-demo-modal-row">
+                    <label className="it-demo-modal-field">
+                      <span>Mobile <abbr title="required">*</abbr></span>
+                      <input
+                        type="tel"
+                        name="mobile"
+                        autoComplete="tel"
+                        value={demoForm.mobile}
+                        onChange={ev => setDemoForm(f => ({ ...f, mobile: ev.target.value }))}
+                        required
+                        placeholder="Phone / WhatsApp"
+                      />
+                    </label>
+                    <label className="it-demo-modal-field">
+                      <span>Email <abbr title="required">*</abbr></span>
+                      <input
+                        type="email"
+                        name="email"
+                        autoComplete="email"
+                        value={demoForm.email}
+                        onChange={ev => setDemoForm(f => ({ ...f, email: ev.target.value }))}
+                        required
+                        placeholder="you@company.com"
+                      />
+                    </label>
+                  </div>
                   <label className="it-demo-modal-field">
-                    <span>Mobile <abbr title="required">*</abbr></span>
-                    <input
-                      type="tel"
-                      name="mobile"
-                      autoComplete="tel"
-                      value={demoForm.mobile}
-                      onChange={ev => setDemoForm(f => ({ ...f, mobile: ev.target.value }))}
-                      required
-                      placeholder="Phone / WhatsApp"
+                    <span>Remarks</span>
+                    <textarea
+                      name="remarks"
+                      rows={2}
+                      value={demoForm.remarks}
+                      onChange={ev => setDemoForm(f => ({ ...f, remarks: ev.target.value }))}
+                      placeholder="Use case, timeline, or questions (optional)"
                     />
                   </label>
-                  <label className="it-demo-modal-field">
-                    <span>Email <abbr title="required">*</abbr></span>
-                    <input
-                      type="email"
-                      name="email"
-                      autoComplete="email"
-                      value={demoForm.email}
-                      onChange={ev => setDemoForm(f => ({ ...f, email: ev.target.value }))}
-                      required
-                      placeholder="you@company.com"
-                    />
-                  </label>
-                </div>
-                <label className="it-demo-modal-field">
-                  <span>Remarks</span>
-                  <textarea
-                    name="remarks"
-                    rows={2}
-                    value={demoForm.remarks}
-                    onChange={ev => setDemoForm(f => ({ ...f, remarks: ev.target.value }))}
-                    placeholder="Use case, timeline, or questions (optional)"
-                  />
-                </label>
-                {demoFormError && <p className="it-demo-modal-error" role="alert">{demoFormError}</p>}
-                <div className="it-demo-modal-actions">
-                  <button type="button" className="it-demo-modal-btn it-demo-modal-btn--ghost" onClick={closeDemoModal} disabled={isDemoSending}>
-                    Cancel
-                  </button>
-                  <button type="submit" className="it-demo-modal-btn it-demo-modal-btn--primary it-demo-modal-btn--send" disabled={isDemoSending}>
-                    <svg className="it-demo-modal-mail-icon" width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                      <polyline points="22,6 12,13 2,6" />
-                    </svg>
-                    {isDemoSending ? 'Sending…' : 'Send request'}
-                  </button>
-                </div>
-              </form>
+                  {demoFormError && <p className="it-demo-modal-error" role="alert">{demoFormError}</p>}
+                  <div className="it-demo-modal-actions">
+                    <button type="button" className="it-demo-modal-btn it-demo-modal-btn--ghost" onClick={closeDemoModal} disabled={isDemoSending}>
+                      Cancel
+                    </button>
+                    <button type="submit" className="it-demo-modal-btn it-demo-modal-btn--primary it-demo-modal-btn--send" disabled={isDemoSending}>
+                      {isDemoSending ? (
+                        <svg className="animate-spin" width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" style={{ marginRight: 8 }}>
+                          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                        </svg>
+                      ) : (
+                        <svg className="it-demo-modal-mail-icon" width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                          <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                      )}
+                      {isDemoSending ? 'Sending…' : 'Send request'}
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>,
           document.body,

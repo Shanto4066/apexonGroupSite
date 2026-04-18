@@ -51,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   ];
 
   const companies = [
-    { id: 'apexonit', name: 'ApexonIT' },
+    { id: 'apexonit', name: 'Apexon IT' },
     { id: 'agro', name: 'Apexon Agro Business' },
     { id: 'medical', name: 'Apexon Medical Accessories' },
     { id: 'garage', name: 'Apexon Car Garage' },

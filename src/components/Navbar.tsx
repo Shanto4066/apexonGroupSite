@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import mainLogo from '../assets/logo/1-mainlogo.svg';
+import itLogo from '../assets/logo/2-itlogo.svg';
+import agroLogo from '../assets/logo/3-agrologo.svg';
+import medLogo from '../assets/logo/4-medlogo.svg';
+import visaLogo from '../assets/logo/5-visalogo.svg';
+import cartLogo from '../assets/logo/6-cartlogo.svg';
+import homeLogo from '../assets/logo/homelogo.svg';
 
 interface NavbarProps {
   currentPage: string;
@@ -32,6 +39,59 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const pageLogoMap: Record<string, string> = {
+    home: homeLogo,
+    about: mainLogo,
+    contact: mainLogo,
+    apexonit: itLogo,
+    agro: agroLogo,
+    medical: medLogo,
+    visa: visaLogo,
+    cart: cartLogo,
+  };
+
+  const activeLogo = pageLogoMap[currentPage] || mainLogo;
+
+  const ctaStyleMap: Record<string, React.CSSProperties> = {
+    home: {
+      background: 'linear-gradient(135deg, #111827 0%, #3f1d2e 42%, #be185d 100%)',
+      color: '#ffffff',
+      boxShadow: '0 10px 24px rgba(190, 24, 93, 0.32)',
+    },
+    apexonit: {
+      background: 'linear-gradient(135deg, #0f1f4b 0%, #1d4ed8 55%, #22d3ee 100%)',
+      color: '#ffffff',
+      boxShadow: '0 10px 24px rgba(29, 78, 216, 0.32)',
+    },
+    agro: {
+      background: 'linear-gradient(135deg, #14532d 0%, #166534 55%, #22c55e 100%)',
+      color: '#ffffff',
+      boxShadow: '0 10px 24px rgba(22, 101, 52, 0.32)',
+    },
+    medical: {
+      background: 'linear-gradient(135deg, #0f766e 0%, #0d9488 55%, #2dd4bf 100%)',
+      color: '#ffffff',
+      boxShadow: '0 10px 24px rgba(13, 148, 136, 0.3)',
+    },
+    garage: {
+      background: 'linear-gradient(135deg, #ea580c, #f97316, #fb923c)',
+      color: '#ffffff',
+      boxShadow: '0 10px 24px rgba(234, 88, 12, 0.32)',
+    },
+    visa: {
+      background: 'linear-gradient(135deg, #7c3aed, #a78bfa, #c084fc)',
+      color: '#ffffff',
+      boxShadow: '0 10px 24px rgba(124, 58, 237, 0.32)',
+    },
+    cart: {
+      background: 'linear-gradient(135deg, #ed1c24, #b91c1c)',
+      color: '#ffffff',
+      boxShadow: '0 10px 24px rgba(237, 28, 36, 0.32)',
+    },
+  };
+
+  const ctaThemeStyle = ctaStyleMap[currentPage];
+
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
@@ -47,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 76 }}>
           {/* Logo */}
           <button onClick={() => nav('home')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-            <img src="/src/assets/logo/logo-full1.png" alt="Apexon Logo" style={{ height: 120 }} />
+            <img src={activeLogo} alt="Apexon Logo" style={{ height: 42 }} />
           </button>
 
           {/* Desktop Nav */}
@@ -103,9 +163,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
               fontSize: '0.875rem', letterSpacing: '0.02em', transition: 'all 0.3s'
             }}>Contact</button>
 
-            <button onClick={() => nav('contact')} className="btn-gold" style={{
+            <button onClick={() => nav('contact')} style={{
               padding: '10px 24px', borderRadius: 10, border: 'none', cursor: 'pointer',
-              fontSize: '0.875rem', marginLeft: 8
+              fontSize: '0.875rem', marginLeft: 8,
+              fontWeight: 700,
+              letterSpacing: '0.01em',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',
+              ...(ctaThemeStyle || {
+                background: 'linear-gradient(135deg, #0f1f4b 0%, #1e3a8a 100%)',
+                color: '#ffffff',
+              }),
             }}>
               Get Started
             </button>

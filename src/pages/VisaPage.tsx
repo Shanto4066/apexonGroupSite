@@ -1,7 +1,46 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 
 interface Props { onNavigate: (page: string) => void; }
+
+const CountUp = ({ value }: { value: string }) => {
+  const [hasStarted, setHasStarted] = useState(false);
+  const nodeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setHasStarted(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    if (nodeRef.current) observer.observe(nodeRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const numStr = value.replace(/[^0-9]/g, '');
+  const suffix = value.replace(/[0-9]/g, '');
+
+  return (
+    <div ref={nodeRef} className="rolling-counter">
+      {numStr.split('').map((digit, i) => (
+        <div
+          key={i}
+          className="rolling-digit"
+          style={{
+            transform: hasStarted ? `translateY(-${parseInt(digit, 10) * 1.2}em)` : 'translateY(0)',
+            transitionDelay: `${i * 0.1}s`,
+          }}
+        >
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+            <span key={n}>{n}</span>
+          ))}
+        </div>
+      ))}
+      <span style={{ marginLeft: '4px', verticalAlign: 'baseline' }}>{suffix}</span>
+    </div>
+  );
+};
 
 export const VisaPage: FC<Props> = () => {
   const revealRefs = useRef<(HTMLElement | null)[]>([]);
@@ -98,38 +137,41 @@ export const VisaPage: FC<Props> = () => {
             <div className="visa-stats">
               {[['50+', 'Countries'], ['5000+', 'Visas'], ['99%', 'Approval'], ['10+', 'Years']].map(([v, l]) => (
                 <div key={l} className="visa-stat">
-                  <div className="visa-stat-val">{v}</div>
+                  <div className="visa-stat-val">
+                    <CountUp value={v} />
+                  </div>
                   <div className="visa-stat-label">{l}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="visa-globe-wrapper">
-            <div className="visa-globe">
-              <div className="visa-globe-ring visa-globe-ring--1" />
-              <div className="visa-globe-ring visa-globe-ring--2" />
-              <div className="visa-globe-ring visa-globe-ring--3" />
-              <div className="visa-globe-core" />
-              <div className="visa-globe-dot" style={{ top: '22%', left: '30%', animationDelay: '0s' }} />
-              <div className="visa-globe-dot" style={{ top: '45%', left: '65%', animationDelay: '0.8s' }} />
-              <div className="visa-globe-dot" style={{ top: '68%', left: '40%', animationDelay: '1.6s' }} />
-              <div className="visa-globe-dot" style={{ top: '35%', left: '78%', animationDelay: '2.4s' }} />
-              <div className="visa-globe-dot" style={{ top: '55%', left: '20%', animationDelay: '3.2s' }} />
-              {/* Flight path arc */}
-              <svg className="visa-flight-path" viewBox="0 0 300 300">
-                <path d="M 60,200 Q 150,40 240,180" fill="none" stroke="url(#visaFlightGrad)" strokeWidth="1.5" strokeDasharray="6 4" />
-                <circle r="4" fill="#c084fc">
-                  <animateMotion dur="4s" repeatCount="indefinite" path="M 60,200 Q 150,40 240,180" />
-                </circle>
-                <defs>
-                  <linearGradient id="visaFlightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#c084fc" stopOpacity="0.2" />
-                    <stop offset="50%" stopColor="#c084fc" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#c084fc" stopOpacity="0.2" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          <div className="visa-3d-wrapper">
+            <div className="visa-3d-scene">
+              <div className="visa-3d-passport">
+                <div className="visa-pass-cover">
+                  <div className="visa-pass-gold-crest" />
+                  <div className="visa-pass-title">PASSPORT</div>
+                </div>
+                <div className="visa-pass-pages" />
+              </div>
+              
+              <div className="visa-3d-ticket">
+                <div className="visa-ticket-header">
+                  <span className="visa-ticket-logo">✈</span>
+                  BOARDING PASS
+                </div>
+                <div className="visa-ticket-body">
+                  <div className="visa-ticket-route">
+                    <span>DXB</span>
+                    <span className="visa-ticket-line" />
+                    <span>JFK</span>
+                  </div>
+                  <div className="visa-ticket-barcode" />
+                </div>
+              </div>
+              
+              <div className="visa-3d-stamp-float">APPROVED</div>
             </div>
           </div>
         </div>

@@ -162,17 +162,17 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* ── HERO ──────────────────────────────────────── */}
       <section style={{
         minHeight: '100vh', display: 'flex', alignItems: 'center',
-        background: '#ffffff',
+        background: 'linear-gradient(165deg, #ffffff 0%, #fff7fb 46%, #ffffff 100%)',
         position: 'relative', overflow: 'hidden', paddingTop: 76
       }}>
         {/* Decorative blobs - subtle for white theme */}
         <div className="deco-blob animate-blob" style={{
           width: 600, height: 600, top: -200, right: -100,
-          background: 'radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%)'
+          background: 'radial-gradient(circle, rgba(190,24,93,0.08) 0%, transparent 70%)'
         }} />
         <div className="deco-blob" style={{
           width: 400, height: 400, bottom: -100, left: -100,
-          background: 'radial-gradient(circle, rgba(15,31,75,0.04) 0%, transparent 70%)'
+          background: 'radial-gradient(circle, rgba(159,18,57,0.06) 0%, transparent 70%)'
         }} />
 
         {/* Grid pattern overlay - dark for white theme */}
@@ -189,46 +189,46 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             width: `${6 + (i % 4) * 4}px`,
             height: `${6 + (i % 4) * 4}px`,
             borderRadius: '50%',
-            background: i % 2 === 0 ? 'rgba(201,168,76,0.3)' : 'rgba(15,31,75,0.1)',
-            top: `${10 + i * 10}%`,
-            left: `${5 + i * 12}%`,
+            background: i % 2 === 0 ? 'rgba(190,24,93,0.22)' : 'rgba(159,18,57,0.12)',
+            top: `${8 + (i % 4) * 16}%`,
+            left: `${56 + (i % 3) * 12}%`,
             animation: `float ${3 + i * 0.5}s ease-in-out infinite`,
             animationDelay: `${i * 0.4}s`
           }} />
         ))}
 
-        <div style={{ maxWidth: 1320, margin: '0 auto', padding: '80px 32px', width: '100%', position: 'relative', zIndex: 2 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)', gap: 60, alignItems: 'stretch' }}>
+        <div className="home-hero-inner" style={{ maxWidth: 1320, margin: '0 auto', padding: '80px 32px', width: '100%', position: 'relative', zIndex: 2 }}>
+          <div className="home-hero-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)', gap: 60, alignItems: 'stretch' }}>
             {/* Left Column: Text Content */}
-            <div>
+            <div className="home-hero-left">
               {/* Badge */}
               <div style={{
                 display: 'inline-flex', alignItems: 'center', gap: 10,
-                background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.2)',
+                background: 'rgba(190, 24, 93, 0.1)', border: '1px solid rgba(190, 24, 93, 0.24)',
                 borderRadius: 100, padding: '8px 18px', marginBottom: 32, animation: 'fadeInUp 0.6s ease forwards'
               }}>
-                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#c9a84c', display: 'block', animation: 'pulse-ring 2s ease-out infinite' }} />
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#be185d', display: 'block', animation: 'pulse-ring 2s ease-out infinite' }} />
                 <span style={{ color: '#0f1f4b', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                   Apexon Corporation — Multi-Industry Group
                 </span>
               </div>
 
               {/* Headline */}
-              <h1 style={{
+              <h1 className="home-hero-title" style={{
                 fontSize: 'clamp(2.8rem, 5vw, 4.8rem)', fontWeight: 900, lineHeight: 1.1,
-                color: '#0f1f4b', marginBottom: 24
+                color: '#0f1f4b', marginBottom: 40
               }}>
-                 <SplitText text="Where Vision" />{' '}
+                 <SplitText text="Trust" />{' '}
                  <span style={{
                    display: 'block',
                    backgroundSize: '200% 100%',
                    animation: 'shimmer 4s linear infinite'
                  }}>
-                   <SplitText text="Meets Excellence" className="gradient-text-gold" />
+                   <SplitText text="Through Transparency" className="gradient-text-berry" />
                  </span>
               </h1>
 
-              <p style={{
+              <p className="home-hero-lead" style={{
                 fontSize: '1.15rem', color: '#6b7fa8', lineHeight: 1.75,
                 marginBottom: 48, maxWidth: 620,
                 animation: 'fadeInUp 0.8s ease forwards 0.25s', opacity: 0
@@ -237,10 +237,31 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               </p>
 
               {/* CTA Buttons */}
-              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', animation: 'fadeInUp 0.8s ease forwards 0.4s', opacity: 0 }}>
-                <button onClick={() => nav('about')} className="btn-gold" style={{
-                  padding: '14px 36px', borderRadius: 12, border: 'none', cursor: 'pointer', fontSize: '0.95rem'
-                }}>
+              <div className="home-hero-ctas" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', animation: 'fadeInUp 0.8s ease forwards 0.4s', opacity: 0 }}>
+                <button onClick={() => nav('about')} style={{
+                  padding: '14px 36px',
+                  borderRadius: 12,
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.95rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.02em',
+                  color: '#ffffff',
+                  background: 'linear-gradient(135deg, #111827 0%, #3f1d2e 42%, #be185d 100%)',
+                  boxShadow: '0 8px 26px rgba(190, 24, 93, 0.28)',
+                  transition: 'all 0.3s',
+                }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 34px rgba(190, 24, 93, 0.36)';
+                    (e.currentTarget as HTMLElement).style.filter = 'brightness(1.03)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 26px rgba(190, 24, 93, 0.28)';
+                    (e.currentTarget as HTMLElement).style.filter = 'none';
+                  }}
+                >
                   Explore Our Group
                 </button>
                 <button onClick={() => nav('contact')} style={{
@@ -264,7 +285,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </div>
 
             {/* Right Column: Animated Radar & Stats */}
-            <div style={{
+            <div className="home-hero-right" style={{
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -273,8 +294,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               opacity: 0
             }}>
               {/* Radar at the top */}
-              <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <div style={{ position: 'relative', width: '100%', maxWidth: 350, aspectRatio: '1/1' }}>
+              <div className="home-radar-wrap" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <div className="home-radar-stage" style={{ position: 'relative', width: '100%', maxWidth: 350, aspectRatio: '1/1' }}>
                   {/* ... Radar Content ... */}
                 {/* Concentric Circles */}
                 {[...Array(4)].map((_, i) => (
@@ -398,7 +419,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               </div>
 
               {/* Stats aligned with buttons on the left */}
-              <div style={{
+              <div className="home-hero-stats" style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: 16,
@@ -426,7 +447,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <div style={{ maxWidth: 560 }} ref={el => addRef(el, 0)} className="reveal">
             <div className="section-line" style={{ marginBottom: 20 }} />
             <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', fontWeight: 800, color: '#0f1f4b', lineHeight: 1.2, marginBottom: 16 }}>
-              A Conglomerate Built on <span className="gradient-text-gold">Trust & Innovation</span>
+              A Conglomerate Built on <span className="gradient-text-berry">Trust & Innovation</span>
             </h2>
             <p style={{ color: '#6b7fa8', fontSize: '1rem', lineHeight: 1.75 }}>
               Founded with a vision to serve diverse industry needs under one trusted corporate umbrella, Apexon Group's sister companies are each independently expert in their domains, yet united by a shared commitment to excellence, integrity, and client success.
@@ -605,27 +626,44 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
       {/* ── CTA BANNER ──────────────────────────────── */}
       <section style={{
-        background: 'linear-gradient(135deg, #0a1535 0%, #0f1f4b 50%, #1a3069 100%)',
+        background: 'linear-gradient(165deg, #fff9fc 0%, #fff4f9 44%, #fef7fb 100%)',
         padding: '96px 32px', position: 'relative', overflow: 'hidden'
       }}>
         <div className="deco-blob" style={{
           width: 500, height: 500, top: -200, right: -100,
-          background: 'radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%)'
+          background: 'radial-gradient(circle, rgba(244,114,182,0.12) 0%, transparent 70%)'
+        }} />
+        <div className="deco-blob" style={{
+          width: 420, height: 420, bottom: -170, left: -120,
+          background: 'radial-gradient(circle, rgba(190,24,93,0.08) 0%, transparent 72%)'
         }} />
         <div ref={el => addRef(el, 14)} className="reveal" style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#ffffff', marginBottom: 20, lineHeight: 1.2 }}>
-            Ready to Grow With <span className="gradient-text-gold">Apexon Group?</span>
+          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#0f1f4b', marginBottom: 20, lineHeight: 1.2 }}>
+            Ready to Grow With <span className="gradient-text-berry">Apexon Group?</span>
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.05rem', marginBottom: 40, lineHeight: 1.7 }}>
+          <p style={{ color: '#6b7fa8', fontSize: '1.05rem', marginBottom: 40, lineHeight: 1.7 }}>
             Join hundreds of businesses that trust Apexon Group to power their growth. Let's build something extraordinary together.
           </p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button onClick={() => nav('contact')} className="btn-gold" style={{ padding: '14px 40px', borderRadius: 12, border: 'none', cursor: 'pointer', fontSize: '0.95rem' }}>
+            <button
+              onClick={() => nav('contact')}
+              style={{
+                padding: '14px 40px',
+                borderRadius: 12,
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '0.95rem',
+                fontWeight: 700,
+                color: '#ffffff',
+                background: 'linear-gradient(135deg, #111827 0%, #3f1d2e 42%, #be185d 100%)',
+                boxShadow: '0 10px 28px rgba(190, 24, 93, 0.34)',
+              }}
+            >
               Start a Conversation
             </button>
             <button onClick={() => nav('about')} style={{
               padding: '14px 40px', borderRadius: 12, background: 'transparent',
-              border: '1px solid rgba(255,255,255,0.3)', color: '#fff', cursor: 'pointer',
+              border: '1px solid #e9d5e3', color: '#0f1f4b', cursor: 'pointer',
               fontSize: '0.95rem', fontWeight: 600, transition: 'all 0.3s'
             }}>
               Learn More
