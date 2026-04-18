@@ -2983,6 +2983,8 @@ button, a {
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 2000px;
+  transform-style: preserve-3d;
 }
 
 .garage-speed-lines {
@@ -2992,7 +2994,13 @@ button, a {
   z-index: 1;
   mask-image: radial-gradient(circle at center, black 0%, transparent 60%);
   -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 60%);
-  animation: speedLinesLeft 0.8s linear infinite;
+  animation: speedLinesLeft 1s linear infinite;
+  opacity: 0;
+  animation: speedLinesLeft 0.8s linear infinite, linesFadeIn 2s 1s forwards;
+}
+
+@keyframes linesFadeIn {
+  to { opacity: 1; }
 }
 
 @keyframes speedLinesLeft {
@@ -3005,13 +3013,40 @@ button, a {
   max-width: 900px;
   position: relative;
   z-index: 5;
-  filter: drop-shadow(20px 30px 20px rgba(15, 31, 75, 0.3));
-  animation: driveFloatRight 5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  filter: drop-shadow(0 25px 35px rgba(15, 31, 75, 0.4));
+  transform-origin: center bottom;
+  animation: carEntry 2.8s cubic-bezier(0.1, 0.9, 0.1, 1) forwards, carIdle 4s ease-in-out 2.8s infinite alternate;
 }
 
-@keyframes driveFloatRight {
-  0% { transform: translateX(-5%) translateY(0) rotate(1deg); }
-  100% { transform: translateX(5%) translateY(-12px) rotate(-1deg); }
+@keyframes carEntry {
+  0% { 
+    transform: translate3d(80vw, -150px, -800px) rotateY(-30deg) rotateZ(8deg); 
+    opacity: 0; 
+    filter: drop-shadow(0 80px 20px rgba(15, 31, 75, 0.05)) blur(6px);
+  }
+  35% { 
+    transform: translate3d(-10%, 25px, 150px) rotateY(15deg) rotateZ(-3deg); 
+    opacity: 1; 
+    filter: drop-shadow(0 15px 15px rgba(15, 31, 75, 0.6)) blur(0px); /* Braking dive */
+  }
+  60% { 
+    transform: translate3d(5%, -15px, -50px) rotateY(-5deg) rotateZ(1.5deg); 
+    filter: drop-shadow(0 35px 25px rgba(15, 31, 75, 0.3)); /* Rebound up */
+  }
+  85% { 
+    transform: translate3d(-1%, 5px, 10px) rotateY(2deg) rotateZ(-0.5deg); 
+  }
+  100% { 
+    transform: translate3d(0, 0, 0) rotateY(0deg) rotateZ(0deg); 
+    filter: drop-shadow(0 25px 35px rgba(15, 31, 75, 0.4));
+  }
+}
+
+@keyframes carIdle {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  33% { transform: translate3d(0, -3px, 0) rotate(-0.25deg); }
+  66% { transform: translate3d(0, 2px, 0) rotate(0.1deg); }
+  100% { transform: translate3d(0, -1px, 0) rotate(0deg); }
 }
 
 .garage-section {

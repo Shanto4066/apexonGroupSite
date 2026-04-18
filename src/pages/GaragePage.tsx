@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { FC } from 'react';
 
-import hondaCarImg from '../assets/images/garage/honda-car.png';
+import transparentCarImg from '../assets/images/garage/1.png';
 import heroImg from '../assets/images/garage/hero-car.jpg';
 import serviceImg from '../assets/images/garage/service.jpg';
 import partsImg from '../assets/images/garage/parts.jpg';
@@ -99,7 +99,7 @@ export const GaragePage: FC<Props> = () => {
           
           <div className="garage-3d-wrapper">
             <div className="garage-speed-lines" />
-            <img src={hondaCarImg} alt="Honda Performance Car HD" className="garage-car-model" />
+            <img src={transparentCarImg} alt="Honda Performance Car HD" className="garage-car-model" />
           </div>
         </div>
       </section>
