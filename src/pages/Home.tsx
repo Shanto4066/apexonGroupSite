@@ -224,7 +224,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                    backgroundSize: '200% 100%',
                    animation: 'shimmer 4s linear infinite'
                  }}>
-                   <SplitText text="Through Transparency." className="gradient-text-berry" />
+                   <SplitText text="Through Transparency.." className="gradient-text-berry" />
                  </span>
               </h1>
 
