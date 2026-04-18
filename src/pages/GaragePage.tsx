@@ -1,10 +1,47 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 
 import transparentCarImg from '../assets/images/garage/1.png';
 import heroImg from '../assets/images/garage/hero-car.jpg';
 import serviceImg from '../assets/images/garage/service.jpg';
 import partsImg from '../assets/images/garage/parts.jpg';
+
+// Rolling counter component (same as Medical page)
+const CountUp = ({ value }: { value: string }) => {
+  const [hasStarted, setHasStarted] = useState(false);
+  const nodeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setHasStarted(entry.isIntersecting);
+    }, { threshold: 0.1 });
+    if (nodeRef.current) observer.observe(nodeRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const numStr = value.replace(/[^0-9]/g, '');
+  const suffix = value.replace(/[0-9]/g, '');
+
+  return (
+    <div ref={nodeRef} className="rolling-counter">
+      {numStr.split('').map((digit, i) => (
+        <div
+          key={i}
+          className="rolling-digit"
+          style={{
+            transform: hasStarted ? `translateY(-${parseInt(digit, 10) * 1.2}em)` : 'translateY(0)',
+            transitionDelay: `${i * 0.1}s`,
+          }}
+        >
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+            <span key={n}>{n}</span>
+          ))}
+        </div>
+      ))}
+      <span style={{ marginLeft: '4px', verticalAlign: 'baseline' }}>{suffix}</span>
+    </div>
+  );
+};
 
 interface Props { onNavigate: (page: string) => void; }
 
@@ -35,7 +72,7 @@ export const GaragePage: FC<Props> = () => {
     }
     return () => observer.disconnect();
   }, []);
-  
+
   const addRef = (el: HTMLElement | null, i: number) => { revealRefs.current[i] = el; };
 
   const services = [
@@ -71,6 +108,53 @@ export const GaragePage: FC<Props> = () => {
     { brand: 'Subaru', detail: 'Performance & standard' },
   ];
 
+  const heroStats = [
+    { 
+      value: '5000+', 
+      label: 'Vehicles Serviced',
+      sub: 'All makes & models',
+      accent: '#ea580c',
+      cardGradient: 'linear-gradient(155deg, #fdba74 0%, #ffedd5 44%, #ffffff 100%)',
+      border: '1px solid rgba(234, 88, 12, 0.3)',
+      labelColor: '#9a3412',
+      subColor: '#57534e',
+      shadow: '0 6px 22px rgba(234, 88, 12, 0.14)',
+    },
+    { 
+      value: '100%', 
+      label: 'Genuine Parts',
+      sub: 'Direct from Japan',
+      accent: '#2563eb',
+      cardGradient: 'linear-gradient(155deg, #93c5fd 0%, #dbeafe 40%, #ffffff 100%)',
+      border: '1px solid rgba(37, 99, 235, 0.28)',
+      labelColor: '#1e40af',
+      subColor: '#475569',
+      shadow: '0 6px 22px rgba(37, 99, 235, 0.12)',
+    },
+    { 
+      value: '10+', 
+      label: 'Master Techs',
+      sub: 'Certified experts',
+      accent: '#dc2626',
+      cardGradient: 'linear-gradient(155deg, #fca5a5 0%, #fee2e2 42%, #ffffff 100%)',
+      border: '1px solid rgba(220, 38, 38, 0.28)',
+      labelColor: '#991b1b',
+      subColor: '#7f1d1d',
+      shadow: '0 6px 22px rgba(220, 38, 38, 0.12)',
+    },
+    { 
+      value: '24hr', 
+      label: 'Emergency Service',
+      sub: 'Breakdown recovery',
+      accent: '#475569',
+      cardGradient: 'linear-gradient(155deg, #cbd5e1 0%, #f1f5f9 44%, #ffffff 100%)',
+      border: '1px solid rgba(71, 85, 105, 0.3)',
+      labelColor: '#334155',
+      subColor: '#475569',
+      shadow: '0 6px 22px rgba(71, 85, 105, 0.14)',
+    },
+  ];
+
   return (
     <div className="page-enter garage-page">
       <section className="garage-hero">
@@ -82,24 +166,37 @@ export const GaragePage: FC<Props> = () => {
             </div>
             <h1 className="garage-title">
               Apexon Car Garage —
-              <span>Where Precision<br/>Meets Passion.</span>
+              <span>Where Precision<br />Meets Passion.</span>
             </h1>
             <p className="garage-lead">
               We don't service cars — we elevate them. Master technicians, verified JDM parts, and high-performance tuning for drivers uncompromising on quality.
             </p>
-            <div className="garage-stats">
-              {[['5K+', 'Serviced'], ['100%', 'Genuine'], ['24/7', 'Recovery']].map(([v, l]) => (
-                <div key={l}>
-                  <div className="garage-stat-val">{v}</div>
-                  <div className="garage-stat-label">{l}</div>
-                </div>
-              ))}
-            </div>
           </div>
-          
+
           <div className="garage-3d-wrapper">
             <div className="garage-speed-lines" />
             <img src={transparentCarImg} alt="Honda Performance Car HD" className="garage-car-model" />
+          </div>
+          
+          <div className="garage-hero-stats">
+            {heroStats.map((s, i) => (
+              <div 
+                key={s.label} 
+                className="garage-hero-stat-card" 
+                style={{ 
+                  animationDelay: `${0.3 + i * 0.12}s`,
+                  background: s.cardGradient,
+                  border: s.border,
+                  boxShadow: s.shadow,
+                } as React.CSSProperties}
+              >
+                <div className="garage-hero-stat-val" style={{ color: s.accent }}>
+                  <CountUp value={s.value} />
+                </div>
+                <div className="garage-hero-stat-label" style={{ color: s.labelColor }}>{s.label}</div>
+                <div style={{ color: s.subColor, fontSize: '0.75rem', marginTop: '4px' }}>{s.sub}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -112,7 +209,7 @@ export const GaragePage: FC<Props> = () => {
               Three synchronized areas of expertise ensuring your vehicle performs flawlessly whether on the track or the commute.
             </p>
           </div>
-          
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {services.map((s, i) => (
               <article key={i} ref={el => addRef(el, i + 1)} className="reveal garage-service-card">
@@ -146,7 +243,7 @@ export const GaragePage: FC<Props> = () => {
               Access to Japan's tier-1 automotive parts manufacturers. Full provenance and authentic serial numbers. Zero counterfeit risk.
             </p>
           </div>
-          
+
           <div className="garage-parts-grid">
             {parts.map((item, i) => (
               <div key={i} ref={el => addRef(el, 5 + i)} className="reveal garage-part-item">

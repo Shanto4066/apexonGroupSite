@@ -298,32 +298,27 @@ export const MedicalPage: FC<Props> = ({ onNavigate }) => {
 
             <div className="medical-hero-side">
               <div className="medical-hero-ornament" aria-hidden>
-                <div className="medical-3d-floor-shadow" />
-                <div className="medical-3d-scene">
-                  <div className="medical-3d-anchor">
-                    <div className="medical-3d-orbit-wrap">
-                      <div className="medical-3d-orbit" />
-                    </div>
-                    <div className="medical-3d-orbit-wrap medical-3d-orbit-wrap--ccw">
-                      <div className="medical-3d-orbit medical-3d-orbit--inner" />
-                    </div>
-                    <div className="medical-3d-glass-card">
-                      <div className="medical-3d-glass-grid" />
-                      <div className="medical-3d-glass-gleam" />
-                    </div>
-                    <div className="medical-3d-capsule">
-                      <div className="medical-3d-capsule-sheen" />
-                    </div>
-                    <div className="medical-3d-cross-stack">
-                      <div className="medical-3d-cross-depth">
-                        <span className="medical-3d-cross-depth-v" />
-                        <span className="medical-3d-cross-depth-h" />
+                <div className="med3d-pulse-ring med3d-pulse-ring--1" />
+                <div className="med3d-pulse-ring med3d-pulse-ring--2" />
+                <div className="med3d-pulse-ring med3d-pulse-ring--3" />
+                <div className="med3d-helix-scene">
+                  <div className="med3d-helix">
+                    {Array.from({ length: 10 }).map((_, i) => (
+                      <div key={i} className="med3d-helix-rung" style={{ '--i': i } as React.CSSProperties}>
+                        <div className="med3d-helix-dot med3d-helix-dot--l" />
+                        <div className="med3d-helix-bar" />
+                        <div className="med3d-helix-dot med3d-helix-dot--r" />
                       </div>
-                      <div className="medical-3d-cross-face">
-                        <span className="medical-3d-cross-face-v" />
-                        <span className="medical-3d-cross-face-h" />
-                      </div>
-                    </div>
+                    ))}
+                  </div>
+                  <div className="med3d-float-pill med3d-float-pill--1" />
+                  <div className="med3d-float-pill med3d-float-pill--2" />
+                  <div className="med3d-float-pill med3d-float-pill--3" />
+                  <div className="med3d-cross-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                      <rect x="9" y="2" width="6" height="20" rx="2" fill="#0d9488"/>
+                      <rect x="2" y="9" width="20" height="6" rx="2" fill="#14b8a6"/>
+                    </svg>
                   </div>
                 </div>
               </div>
