@@ -26,6 +26,12 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Show build output
+        run: |
+          echo "Listing dist files"
+          ls -la dist
+          echo "Using server dir: ${{ secrets.CPANEL_SERVER_DIR != '' && secrets.CPANEL_SERVER_DIR || '/' }}"
+
       - name: Deploy dist to cPanel public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -35,5 +41,5 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./dist/
-          server-dir: ./public_html/
+          server-dir: ${{ secrets.CPANEL_SERVER_DIR != '' && secrets.CPANEL_SERVER_DIR || '/' }}
           dangerous-clean-slate: false
