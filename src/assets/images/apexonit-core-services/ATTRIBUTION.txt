@@ -1,0 +1,8 @@
+ApexonIT “Our Core Services” hero photos — originals from Unsplash (https://unsplash.com/license).
+Downloaded and bundled in-repo so the site does not depend on Unsplash uptime.
+
+custom-software.jpg    — photo-1498050108023-c5249f4df085
+cctv-enterprise.jpg    — photo-1557597774-9d273605dfa9
+it-enabled.jpg         — photo-1451187580459-43490279c0fa
+digital-marketing.jpg  — photo-1533750349088-cd871a92f312
+ui-ux-design.jpg       — photo-1581291518857-4e27b48ff24e

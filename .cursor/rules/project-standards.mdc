@@ -1,0 +1,27 @@
+---
+description: Project standards – comments, terminal, structure, API, Vue SFC
+alwaysApply: true
+---
+
+# Project standards
+
+## General
+- Comments: use `//` only; no `/** */`.
+- Terminal: chain with `;`, never `&&`.
+- Controller/model/view: one folder per entity, files inside.
+- Development phase: update existing migration files; do not create follow-up migrations unless user explicitly asks.
+- New tables: soft delete; add created_by, updated_by (Traits fill them).
+- Reusable first: table, select, action buttons, createdbyinfo; default Save/Close/Cancel/Update with spinner while processing.
+- Table actions: show spinner on click until success, then next action.
+
+## API controllers
+- Extend `App\Http\Controllers\BaseController` (not Controller).
+- Use BaseController methods only; no raw `response()->json(...)`.
+- Success: `$this->successResponse($data, $message, $code)` → `{ success: true, message, data }`
+- Errors: `validationErrorResponse`, `unauthorizedResponse`, `forbiddenResponse`, `notFoundResponse`, `errorResponse`.
+
+## Vue SFC
+- Order: **script** → **template** → **style**.
+- Use `<script setup>` only; clear names, short functions, minimal nesting.
+- Prefer short expressions and helpers over long blocks.
+- No need to build if need user will ask.
