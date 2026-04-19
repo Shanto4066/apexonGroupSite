@@ -16,6 +16,34 @@ const CountUp = ({ value }: { value: string }) => {
     return () => observer.disconnect();
   }, []);
 
+  const decimalMatch = value.match(/^(\d+)\.(\d+)(.*)$/);
+  if (decimalMatch) {
+    const [, whole, frac, suffix] = decimalMatch;
+    const renderDigits = (digits: string, offset: number) =>
+      digits.split('').map((digit, i) => (
+        <div
+          key={`${offset}-${i}`}
+          className="rolling-digit"
+          style={{
+            transform: hasStarted ? `translateY(-${parseInt(digit, 10) * 1.2}em)` : 'translateY(0)',
+            transitionDelay: `${(offset + i) * 0.1}s`,
+          }}
+        >
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+            <span key={n}>{n}</span>
+          ))}
+        </div>
+      ));
+    return (
+      <div ref={nodeRef} className="rolling-counter">
+        {renderDigits(whole, 0)}
+        <span className="rolling-decimal" aria-hidden="true">.</span>
+        {renderDigits(frac, whole.length)}
+        <span style={{ marginLeft: '4px', verticalAlign: 'baseline' }}>{suffix}</span>
+      </div>
+    );
+  }
+
   const numStr = value.replace(/[^0-9]/g, '');
   const suffix = value.replace(/[0-9]/g, '');
 
@@ -95,7 +123,7 @@ export const CartPage: FC<Props> = () => {
   return (
     <div className="page-enter cart-page">
       {/* Hero Section */}
-      <section className="cart-hero">
+      <section className="cart-hero"> 
         <div className="cart-hero-grid">
           <div>
             <div className="cart-badge">

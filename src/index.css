@@ -1472,6 +1472,11 @@ button, a {
   flex-shrink: 0;
 }
 
+.rolling-decimal {
+  line-height: 1.2em;
+  align-self: flex-end;
+}
+
 @keyframes char-reveal {
   0% { transform: translateY(110%); }
   100% { transform: translateY(0); }
@@ -3852,7 +3857,7 @@ button, a {
 .cart-title {
   font-size: clamp(2.8rem, 5vw, 4.2rem);
   font-weight: 900;
-  color: #4b1613;
+  color: #701711;
   line-height: 1.1;
   margin-bottom: 24px;
   letter-spacing: -0.02em;
