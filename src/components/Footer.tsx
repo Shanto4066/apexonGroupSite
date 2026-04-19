@@ -1,4 +1,5 @@
 import React from 'react';
+import logoTextWhite from '../assets/logo/logo-text-white.svg';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -67,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand */}
           <div style={{ gridColumn: 'span 1' }}>
             <div style={{ marginBottom: 24 }}>
-              <img src="/src/assets/logo/logo-text-white.svg" alt="Apexon Logo" style={{ height: 42 }} />
+              <img src={logoTextWhite} alt="Apexon Logo" style={{ height: 42 }} />
             </div>
             <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', lineHeight: 1.7, marginBottom: 28 }}>
               Apexon Group is a diversified conglomerate driving excellence across technology, agriculture, healthcare, automotive, travel, and e-commerce sectors.
