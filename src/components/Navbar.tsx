@@ -16,7 +16,7 @@ const companies = [
   { id: 'apexonit', name: 'Apexon IT', tag: 'Technology' },
   { id: 'agro', name: 'Apexon Agro', tag: 'Agriculture' },
   { id: 'medical', name: 'Apexon Medical', tag: 'Healthcare' },
-  { id: 'garage', name: 'Apexon Garage', tag: 'Automotive' },
+  { id: 'garage', name: 'Apexon Automotive', tag: 'Automotive' },
   { id: 'visa', name: 'Apexon Visa', tag: 'Travel & Visa' },
   { id: 'cart', name: 'Apexon Cart', tag: 'E-Commerce' },
 ];

@@ -45,7 +45,7 @@ const CountUp = ({ value }: { value: string }) => {
 const companies = [
   {
     id: 'apexonit',
-    name: 'ApexonIT',
+    name: 'Apexon IT',
     category: 'Information Technology',
     desc: 'Enterprise software, CCTV solutions, digital marketing, UI/UX design & IT-enabled services powering businesses forward.',
     icon: '⬡',
@@ -75,7 +75,7 @@ const companies = [
   },
   {
     id: 'garage',
-    name: 'Apexon Car Garage',
+    name: 'Apexon Automotive',
     category: 'Automotive Excellence',
     desc: 'World-class automotive services, genuine Japan parts sourcing, and complete new garage business consultancy.',
     icon: '◆',

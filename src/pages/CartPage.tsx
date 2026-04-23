@@ -218,7 +218,7 @@ export const CartPage: FC<Props> = () => {
           </p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="cart-cta-btn">Apply to Sell Now</button>
-            <button className="cart-cta-btn secondary">Shop Now</button>
+            <button className="cart-cta-btn secondary" onClick={() => window.open('https://apexoncart.com', '_blank')}>Shop Now</button>
           </div>
         </div>
       </section>

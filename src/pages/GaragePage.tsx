@@ -165,7 +165,7 @@ export const GaragePage: FC<Props> = () => {
               Automotive Excellence
             </div>
             <h1 className="garage-title">
-              Apexon Car Garage —
+              Apexon Automotive —
               <span>Where Precision<br />Meets Passion.</span>
             </h1>
             <p className="garage-lead">
