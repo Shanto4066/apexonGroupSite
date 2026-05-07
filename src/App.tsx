@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import Lenis from 'lenis';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { Home } from './pages/Home';
-import { About } from './pages/About';
-import { ApexonIT } from './pages/ApexonIT';
-import { AgroPage } from './pages/AgroPage';
-import { MedicalPage } from './pages/MedicalPage';
-import { GaragePage } from './pages/GaragePage';
-import { VisaPage } from './pages/VisaPage';
-import { CartPage } from './pages/CartPage';
-import { Contact } from './pages/Contact';
+
+const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })));
+const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })));
+const ApexonIT = lazy(() => import('./pages/ApexonIT').then(m => ({ default: m.ApexonIT })));
+const AgroPage = lazy(() => import('./pages/AgroPage').then(m => ({ default: m.AgroPage })));
+const MedicalPage = lazy(() => import('./pages/MedicalPage').then(m => ({ default: m.MedicalPage })));
+const GaragePage = lazy(() => import('./pages/GaragePage').then(m => ({ default: m.GaragePage })));
+const VisaPage = lazy(() => import('./pages/VisaPage').then(m => ({ default: m.VisaPage })));
+const CartPage = lazy(() => import('./pages/CartPage').then(m => ({ default: m.CartPage })));
+const Contact = lazy(() => import('./pages/Contact').then(m => ({ default: m.Contact })));
 
 type Page = 'home' | 'about' | 'apexonit' | 'agro' | 'medical' | 'garage' | 'visa' | 'cart' | 'contact';
 
@@ -22,19 +22,24 @@ function App() {
   };
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
     let rafId = 0;
-    function raf(time: number) {
-      lenis.raf(time);
+    let lenisInstance: { raf: (t: number) => void; destroy: () => void } | null = null;
+
+    import('lenis').then(({ default: Lenis }) => {
+      lenisInstance = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      function raf(time: number) {
+        lenisInstance?.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
       rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
+    });
+
     return () => {
       cancelAnimationFrame(rafId);
-      lenis.destroy();
+      lenisInstance?.destroy();
     };
   }, []);
 
@@ -72,7 +77,9 @@ function App() {
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f8f9fc' }}>
       <Navbar currentPage={currentPage} onNavigate={navigate} />
       <main style={{ flex: 1 }}>
-        {renderPage()}
+        <Suspense fallback={<div style={{ minHeight: '60vh' }} />}>
+          {renderPage()}
+        </Suspense>
       </main>
       <Footer onNavigate={navigate} />
     </div>

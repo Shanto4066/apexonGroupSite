@@ -1,0 +1,7 @@
+---
+alwaysApply: true
+---
+-On row/action click, turn the spinner on first.
+-Do not open the modal/form until all async requests/processing are complete.
+-Whether the action succeeds or fails, always turn the spinner off in finally.
+-For every new action, using the reusable runAction helper is mandatory.
