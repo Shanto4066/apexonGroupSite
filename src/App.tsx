@@ -42,7 +42,7 @@ function App() {
       lenisInstance?.destroy();
     };
   }, []);
-
+ 
   useEffect(() => {
     const titles: Record<Page, string> = {
       home: 'Apexon Group — Excellence Across Industries',
