@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
+import imgGazi from '../assets/images/management/Gazi Shahadat Hossain.jpg.jpeg';
+import imgAbu from '../assets/images/management/Abu Shahadat Hossain.jpg.jpeg';
+import imgMahabur from '../assets/images/management/Md Mahabur.jpg.jpeg';
+import imgShakaouth from '../assets/images/management/Shakaouth.jpg.jpeg';
+import imgMeftahul from '../assets/images/management/Md Meftahul Islam.jpg.jpeg';
+import imgHarunur from '../assets/images/management/Harunur Rashid Shrabon.jpg.jpeg';
 
 interface AboutProps {
   onNavigate: (page: string) => void;
@@ -262,22 +268,55 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
               Visionary leaders driving Apexon Group's mission across continents and industries.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 28 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
             {[
-              { name: 'Abdullah Rahman', role: 'Chairman & Founder', initials: 'AR' },
-              { name: 'Farid Ahmed', role: 'Group CEO', initials: 'FA' },
-              { name: 'Nusrat Jahan', role: 'Chief Technology Officer', initials: 'NJ' },
-              { name: 'Kamal Hossain', role: 'Chief Financial Officer', initials: 'KH' },
+              { name: 'Gazi Shahadat Hossain', role: 'Chairman', img: imgGazi, desc: '35+ years shaping industries across Garments, Agro, Land & Solar — a visionary force behind Apexon\'s founding mission.' },
+              { name: 'Abu Shahadat Hossain', role: 'Managing Director', img: imgAbu, desc: '30+ years of excellence in Banking & Finance, bringing rock-solid strategic leadership and financial wisdom to every decision.' },
+              { name: 'Md Mahabur Islam', role: 'CEO', img: imgMahabur, desc: '15+ years driving business growth across Automotive & Development sectors — turning bold ideas into thriving realities.' },
+              { name: 'Md Shakaouth Hossian', role: 'CTO', img: imgShakaouth, desc: '15+ years pioneering IT & Software solutions, architecting the digital backbone that powers Apexon\'s innovation forward.' },
+              { name: 'Md Meftahul Islam', role: 'COO', img: imgMeftahul, desc: '10+ years mastering Digital Marketing & Operations, building seamless systems that keep the entire group running at its best.' },
+              { name: 'Harunur Rashid Shrabon', role: 'Creative Designer', img: imgHarunur, desc: '6+ years crafting compelling visual identities — the creative heartbeat behind Apexon\'s brand and storytelling.' },
             ].map((leader, i) => (
-              <div key={i} ref={el => addRef(el, 15 + i)} className="reveal pro-card" style={{ padding: '36px 28px', textAlign: 'center' }}>
-                <div style={{
-                  width: 80, height: 80, borderRadius: '50%', margin: '0 auto 20px',
-                  background: 'linear-gradient(135deg, #0f1f4b, #2a4494)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#ffffff', fontWeight: 800, fontSize: '1.3rem', letterSpacing: '0.05em'
-                }}>{leader.initials}</div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f1f4b', marginBottom: 6 }}>{leader.name}</h3>
-                <p style={{ color: '#6b7fa8', fontSize: '0.85rem', fontWeight: 500 }}>{leader.role}</p>
+              <div key={i} ref={el => addRef(el, 15 + i)} className="reveal" style={{
+                borderRadius: 20,
+                overflow: 'hidden',
+                background: '#ffffff',
+                boxShadow: '0 2px 12px rgba(15,31,75,0.07)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'default',
+              }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-6px)';
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = '0 16px 40px rgba(15,31,75,0.14)';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = '0 2px 12px rgba(15,31,75,0.07)';
+                }}
+              >
+                {/* Image — full width, fixed height */}
+                <div style={{ width: '100%', height: 280, overflow: 'hidden', position: 'relative' }}>
+                  <img src={leader.img} alt={leader.name} loading="lazy" style={{
+                    width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
+                    transition: 'transform 0.4s ease',
+                  }}
+                    onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.04)'}
+                    onMouseLeave={e => (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'}
+                  />
+                  {/* Role badge */}
+                  <div style={{
+                    position: 'absolute', bottom: 12, left: 12,
+                    background: 'rgba(15,31,75,0.82)', backdropFilter: 'blur(8px)',
+                    color: '#fff', fontSize: '0.72rem', fontWeight: 600,
+                    padding: '4px 12px', borderRadius: 20, letterSpacing: '0.06em', textTransform: 'uppercase',
+                  }}>{leader.role}</div>
+                </div>
+                {/* Name + desc */}
+                <div style={{ padding: '20px 24px 26px' }}>
+                  <div style={{ width: 32, height: 3, background: 'linear-gradient(90deg, #be185d, #9f1239)', borderRadius: 2, marginBottom: 12 }} />
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f1f4b', margin: '0 0 8px', lineHeight: 1.3 }}>{leader.name}</h3>
+                  <p style={{ fontSize: '0.82rem', color: '#6b7fa8', lineHeight: 1.65, margin: 0 }}>{leader.desc}</p>
+                </div>
               </div>
             ))}
           </div>
