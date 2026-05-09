@@ -259,16 +259,16 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
       </section>
 
       {/* Leadership */}
-      <section style={{ background: '#f8f9fc', padding: '96px 32px' }}>
+      <section style={{ background: '#f8f9fc', padding: 'clamp(64px, 8vw, 96px) clamp(16px, 4vw, 32px)' }}>
         <div style={{ maxWidth: 1320, margin: '0 auto' }}>
-          <div ref={el => addRef(el, 14)} className="reveal" style={{ textAlign: 'center', marginBottom: 64 }}>
+          <div ref={el => addRef(el, 14)} className="reveal" style={{ textAlign: 'center', marginBottom: 'clamp(36px, 6vw, 64px)' }}>
             <div className="section-line" style={{ margin: '0 auto 20px' }} />
             <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', fontWeight: 800, color: '#0f1f4b', marginBottom: 12 }}>Leadership Team</h2>
             <p style={{ color: '#6b7fa8', maxWidth: 440, margin: '0 auto', lineHeight: 1.7 }}>
               Visionary leaders driving Apexon Group's mission across continents and industries.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
+          <div className="about-leadership-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'clamp(20px, 3vw, 32px)' }}>
             {[
               { name: 'Gazi Shahadat Hossain', role: 'Chairman', img: imgGazi, desc: '35+ years shaping industries across Garments, Agro, Land & Solar — a visionary force behind Apexon\'s founding mission.' },
               { name: 'Abu Shahadat Hossain', role: 'Managing Director', img: imgAbu, desc: '30+ years of excellence in Banking & Finance, bringing rock-solid strategic leadership and financial wisdom to every decision.' },
@@ -277,7 +277,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
               { name: 'Md Meftahul Islam', role: 'COO', img: imgMeftahul, desc: '10+ years mastering Digital Marketing & Operations, building seamless systems that keep the entire group running at its best.' },
               { name: 'Harunur Rashid Shrabon', role: 'Creative Designer', img: imgHarunur, desc: '6+ years crafting compelling visual identities — the creative heartbeat behind Apexon\'s brand and storytelling.' },
             ].map((leader, i) => (
-              <div key={i} ref={el => addRef(el, 15 + i)} className="reveal" style={{
+              <div key={i} ref={el => addRef(el, 15 + i)} className="reveal about-leadership-card" style={{
                 borderRadius: 20,
                 overflow: 'hidden',
                 background: '#ffffff',
@@ -295,7 +295,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
                 }}
               >
                 {/* Image — full width, fixed height */}
-                <div style={{ width: '100%', height: 280, overflow: 'hidden', position: 'relative' }}>
+                <div style={{ width: '100%', height: 'clamp(220px, 30vw, 280px)', overflow: 'hidden', position: 'relative' }}>
                   <img src={leader.img} alt={leader.name} loading="lazy" style={{
                     width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
                     transition: 'transform 0.4s ease',
@@ -312,7 +312,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
                   }}>{leader.role}</div>
                 </div>
                 {/* Name + desc */}
-                <div style={{ padding: '20px 24px 26px' }}>
+                <div style={{ padding: '20px clamp(16px, 3vw, 24px) 26px' }}>
                   <div style={{ width: 32, height: 3, background: 'linear-gradient(90deg, #be185d, #9f1239)', borderRadius: 2, marginBottom: 12 }} />
                   <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f1f4b', margin: '0 0 8px', lineHeight: 1.3 }}>{leader.name}</h3>
                   <p style={{ fontSize: '0.82rem', color: '#6b7fa8', lineHeight: 1.65, margin: 0 }}>{leader.desc}</p>
