@@ -7,12 +7,12 @@ import imgCoreCctv from '../assets/images/apexonit-core-services/cctv-enterprise
 import imgCoreItEnabled from '../assets/images/apexonit-core-services/it-enabled.jpg';
 import imgCoreDigitalMarketing from '../assets/images/apexonit-core-services/digital-marketing.jpg';
 import imgCoreUiUx from '../assets/images/apexonit-core-services/ui-ux-design.jpg';
-import imgTeam01 from '../assets/images/apexonit-expert-team/team-01.jpg';
-import imgTeam02 from '../assets/images/apexonit-expert-team/team-02.jpg';
-import imgTeam03 from '../assets/images/apexonit-expert-team/team-03.jpg';
-import imgTeam04 from '../assets/images/apexonit-expert-team/team-04.jpg';
-import imgTeam05 from '../assets/images/apexonit-expert-team/team-05.jpg';
-import imgTeam06 from '../assets/images/apexonit-expert-team/team-06.jpg';
+import imgGazi from '../assets/images/management/Gazi Shahadat Hossain.jpg.jpeg';
+import imgAbu from '../assets/images/management/Abu Shahadat Hossain.jpg.jpeg';
+import imgShakaouth from '../assets/images/management/Shakaouth.jpg.jpeg';
+import imgMahabur from '../assets/images/management/Md Mahabur.jpg.jpeg';
+import imgMeftahul from '../assets/images/management/Md Meftahul Islam.jpg.jpeg';
+import imgHarunur from '../assets/images/management/Harunur Rashid Shrabon.jpg.jpeg';
 
 interface Props { onNavigate: (page: string) => void; }
 
@@ -239,12 +239,12 @@ const whyChooseItems = [
 ];
 
 const expertTeamMembers = [
-  { name: 'Kamal Rahman', role: 'Chief Technology Officer', image: imgTeam01, imageAlt: 'Portrait of Chief Technology Officer' },
-  { name: 'James Mitchell', role: 'Lead Solutions Architect', image: imgTeam02, imageAlt: 'Portrait of Lead Solutions Architect' },
-  { name: 'Nadia Islam', role: 'Head of Security & Infrastructure', image: imgTeam03, imageAlt: 'Portrait of Head of Security and Infrastructure' },
-  { name: 'David Chen', role: 'Director of Delivery', image: imgTeam04, imageAlt: 'Portrait of Director of Delivery' },
-  { name: 'Sarah Ahmed', role: 'UX Practice Lead', image: imgTeam05, imageAlt: 'Portrait of UX Practice Lead' },
-  { name: 'Rafiq Hassan', role: 'Principal Software Engineer', image: imgTeam06, imageAlt: 'Portrait of Principal Software Engineer' },
+  { name: 'Gazi Mohammad Shahadat Hossain', role: 'Chairman', image: imgGazi, imageAlt: 'Portrait of Gazi Shahadat Hossain' },
+  { name: 'Abu Shahadat Hossain', role: 'Managing Director', image: imgAbu, imageAlt: 'Portrait of Abu Shahadat Hossain' },
+  { name: 'Md Shakaouth Hossain', role: 'Chief Technology Officer', image: imgShakaouth, imageAlt: 'Portrait of Md Shakaouth Hossain' },
+  { name: 'Md Mahabur Islam', role: 'Head of Security & Infrastructure', image: imgMahabur, imageAlt: 'Portrait of Md Mahabur Islam' },
+  { name: 'Md Meftahul Islam', role: 'UI/UX & Digital Experience Lead', image: imgMeftahul, imageAlt: 'Portrait of Md Meftahul Islam' },
+  { name: 'Harunur Rashid Shrabon', role: 'Frontend Developer & QA Tester', image: imgHarunur, imageAlt: 'Portrait of Harunur Rashid Shrabon' },
 ];
 
 const softwareProducts = [

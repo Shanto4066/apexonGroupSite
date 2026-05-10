@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
-import imgGazi from '../assets/images/management/Gazi Shahadat Hossain.jpg.jpeg';
 import imgAbu from '../assets/images/management/Abu Shahadat Hossain.jpg.jpeg';
+import imgTouhid from '../assets/images/management/Touhid.jpg.jpeg';
 import imgMahabur from '../assets/images/management/Md Mahabur.jpg.jpeg';
 import imgShakaouth from '../assets/images/management/Shakaouth.jpg.jpeg';
 import imgMeftahul from '../assets/images/management/Md Meftahul Islam.jpg.jpeg';
@@ -270,12 +270,12 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
           </div>
           <div className="about-leadership-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'clamp(20px, 3vw, 32px)' }}>
             {[
-              { name: 'Gazi Shahadat Hossain', role: 'Chairman', img: imgGazi, desc: '35+ years shaping industries across Garments, Agro, Land & Solar — a visionary force behind Apexon\'s founding mission.' },
-              { name: 'Abu Shahadat Hossain', role: 'Managing Director', img: imgAbu, desc: '30+ years of excellence in Banking & Finance, bringing rock-solid strategic leadership and financial wisdom to every decision.' },
-              { name: 'Md Mahabur Islam', role: 'CEO', img: imgMahabur, desc: '15+ years driving business growth across Automotive & Development sectors — turning bold ideas into thriving realities.' },
-              { name: 'Md Shakaouth Hossian', role: 'CTO', img: imgShakaouth, desc: '15+ years pioneering IT & Software solutions, architecting the digital backbone that powers Apexon\'s innovation forward.' },
-              { name: 'Md Meftahul Islam', role: 'COO', img: imgMeftahul, desc: '10+ years mastering Digital Marketing & Operations, building seamless systems that keep the entire group running at its best.' },
-              { name: 'Harunur Rashid Shrabon', role: 'Creative Designer', img: imgHarunur, desc: '6+ years crafting compelling visual identities — the creative heartbeat behind Apexon\'s brand and storytelling.' },
+              { name: 'Abu Shahadat Hossain', role: 'Chairman', img: imgAbu, desc: '30+ years of expertise in Banking, Finance, and Accounting ERP systems — providing the strategic and financial foundation that drives Apexon\'s vision forward.' },
+              { name: 'Md Mahabur Islam', role: 'Managing Director', img: imgMahabur, desc: '15+ years driving business growth across Automotive & Development sectors — turning bold ideas into thriving realities.' },
+              { name: 'Md Shakaouth Hossian', role: 'Deputy Managing Director', img: imgShakaouth, desc: '15+ years pioneering IT & Software solutions, architecting the digital backbone that powers Apexon\'s innovation forward.' },
+              { name: 'Md Touhidur Rahman', role: 'Director', img: imgTouhid, desc: 'A seasoned business leader with deep expertise in operations and strategic planning, steering Apexon\'s growth with clarity and discipline.' },
+              { name: 'Md Meftahul Islam', role: 'Executive Director', img: imgMeftahul, desc: '10+ years mastering Digital Marketing & Operations, building seamless systems that keep the entire group running at its best.' },
+              { name: 'Harunur Rashid Shrabon', role: 'Director', img: imgHarunur, desc: '6+ years crafting compelling visual identities — the creative heartbeat behind Apexon\'s brand and storytelling.' },
             ].map((leader, i) => (
               <div key={i} ref={el => addRef(el, 15 + i)} className="reveal about-leadership-card" style={{
                 borderRadius: 20,
