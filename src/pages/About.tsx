@@ -306,9 +306,14 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
                   {/* Role badge */}
                   <div style={{
                     position: 'absolute', bottom: 12, left: 12,
-                    background: 'rgba(15,31,75,0.82)', backdropFilter: 'blur(8px)',
-                    color: '#fff', fontSize: '0.72rem', fontWeight: 600,
-                    padding: '4px 12px', borderRadius: 20, letterSpacing: '0.06em', textTransform: 'uppercase',
+                    background: 'rgba(255,255,255,0.15)',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255,255,255,0.35)',
+                    color: '#fff', fontSize: '0.68rem', fontWeight: 700,
+                    padding: '5px 13px', borderRadius: 20, letterSpacing: '0.08em', textTransform: 'uppercase',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.2)',
+                    textShadow: 'none',
                   }}>{leader.role}</div>
                 </div>
                 {/* Name + desc */}
