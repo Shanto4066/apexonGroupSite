@@ -988,7 +988,7 @@ export const ApexonIT: FC<Props> = ({ onNavigate }) => {
       </section>
 
       {/* Expert team — tv-team-card-four pattern; portraits under apexonit-expert-team */}
-      <section className="it-team-section" style={{ padding: '96px 32px', background: '#f5f7fc' }}>
+      <section className="it-team-section" style={{ padding: '96px 32px', background: '#f5f7fc', display: 'none' }}>
         <div style={{ maxWidth: 1320, margin: '0 auto' }}>
           <div ref={el => addRef(el, 17)} className="reveal it-team-intro">
             <div className="title-wrap three">
