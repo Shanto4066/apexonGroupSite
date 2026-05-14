@@ -268,7 +268,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate: _onNavigate }) => {
               Visionary leaders driving Apexon Group's mission across continents and industries.
             </p>
           </div>
-          <div className="about-leadership-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'clamp(20px, 3vw, 32px)' }}>
+          <div className="about-leadership-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'clamp(20px, 3vw, 32px)', maxWidth: 960, margin: '0 auto' }}>
             {[
               { name: 'Abu Shahadat Hossain', role: 'Chairman', img: imgAbu, desc: '30+ years of expertise in Banking, Finance, and Accounting ERP systems — providing the strategic and financial foundation that drives Apexon\'s vision forward.' },
               { name: 'Md Mahabur Islam', role: 'Managing Director', img: imgMahabur, desc: '15+ years driving business growth across Automotive & Development sectors — turning bold ideas into thriving realities.' },
